@@ -1,0 +1,1 @@
+Added a FileType entry for experiment upload (Col G in Excel Template)
