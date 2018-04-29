@@ -15,9 +15,9 @@ ORG = Matlab2OriginPlot();
 
 for CapID = CapIDs
     if(correct == 1)
-    [VoltageGradient, CurrentGradient, VOffset, IOffset, ResConcs,CapConcs, VoltageOffsets, CurrentOffsets, No, allCaps ] = CorrectedSelectivity(CapID);    
+    [VoltageGradient, CurrentGradient, VOffset, IOffset, ResConcs,CapConcs, VoltageOffsets, CurrentOffsets, No, allCaps ] = ca_selectivity(CapID);    
         else
-    [VoltageGradient, CurrentGradient, VOffset, IOffset, ResConcs,CapConcs, VoltageOffsets, CurrentOffsets, No] = Selectivity(CapID);
+    [VoltageGradient, CurrentGradient, VOffset, IOffset, ResConcs,CapConcs, VoltageOffsets, CurrentOffsets, No] = c_selectivity(CapID);
     %allCaps = CapID;
     end
     
@@ -34,16 +34,25 @@ for CapID = CapIDs
     Caps = [Caps, CapID];
     close all;
     
-    uRess = unique(ResConcs);
-%     aY = [];
-%     aZ = [];
-    for uRes =  uRess
-       uIndex =  find(ResConcs==uRes);
-       aZVol = [aZVol, mean(zVol(uIndex))];
-       aYRes = [aYRes, uRes];
-       aCaps = [aCaps, CapID];
-       aXCap = [aXCap, mean(CapConcs(uIndex))];
-    end   
+%     uRess = unique(ResConcs);
+% %     aY = [];
+% %     aZ = [];
+%     for uRes =  uRess
+%        uIndex =  find(ResConcs==uRes);
+%        aZVol = [aZVol, mean(zVol(uIndex))];
+%        aYRes = [aYRes, uRes];
+%        aCaps = [aCaps, CapID];
+%        aXCap = [aXCap, mean(CapConcs(uIndex))];
+%     end
+    
+ 
+       aZVol = zVol;
+       aYRes = yRes;
+       %aCaps = Caps;
+       aXCap = xCap;
+
+    
+    
     % aX = (zeros(1,size(aZ,2)))+ x(1);
   
     % aXY = aY ./ aX; % This is the relative concentration
@@ -59,7 +68,7 @@ for CapID = CapIDs
     end
 end
    
-allData = [aCaps' aXCap' aYRes' aZVol'];
+allData = [aXCap' aYRes' aZVol'];%aCaps' aXCap' aYRes' aZVol'];
 ORG.MatrixToOrigin(allData, 'Corrected, Averaged Data');
 ORG.Disconnect;
 

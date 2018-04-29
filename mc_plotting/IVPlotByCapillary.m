@@ -1,4 +1,4 @@
-function [ output_args ] = IVPlotByCapillary(Input, CapOrExp )
+function [ IV ] = IVPlotByCapillary(Input, CapOrExp )
    SealedYN = 1; 
    Suppressed = 0;
    temp_ExptIDs = [];
@@ -19,18 +19,22 @@ function [ output_args ] = IVPlotByCapillary(Input, CapOrExp )
 close all;
 figure;
 hold on
+
 for ExperimentID = ExptIDs
     [ IV, ~,~ ] = LoadIVByNo(  ExperimentID );
      IV = IVClean(IV);
      half = size(IV(:,2));
      half = half(1);
      half = round(half / 2);
-    plot(IV(:,2),IV(:,1))
+     
     [ FileName, PathName, Date, No, E, id ] = GetDataByID(ExperimentID);
     CapConc = E.getCapillaryConc();
     ResConc = E.getReservoirConc();
+    
+    scatter(IV(:,2),IV(:,1))    
     txt1 = ['\leftarrow Res =', num2str(ResConc)]; %Cap =', num2str(CapConc),'
     text(IV(half,2),IV(half,1),txt1);
+
 end
     xlabel('Voltage (mV)');
     ylabel('Current (nA)');

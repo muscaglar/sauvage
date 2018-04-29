@@ -1,4 +1,4 @@
-function [newCapConcs,newSelectivities] = SelectivityPhasePlot(CapIDs, titles, plot)
+function [newCapConcs,newSelectivities] = new_selectivityPhasePlot(CapIDs, titles, plot)
 
 y = [];
 x = [];
@@ -15,31 +15,33 @@ for CapID = CapIDs
     
     index_size = size(ResConcs);
     index = index_size(2);
-    
-    if (4 > VoltageGradient(1) && VoltageGradient(1) > -4)
-        selectivity = 0;
-    elseif ( VoltageGradient(1) < 0)
-        selectivity = -1;
-    elseif ( VoltageGradient(1) > 0)
-        selectivity = 1;
+    selectivity = [];
+    for i = 1:index
+        
+         if (1 > VoltageOffsets(i) && VoltageOffsets(i) > -1)
+            selectivity(i) = 0;
+         else
+            selectivity(i) = sign(-1 * VoltageOffsets(i) * sign(log10(CapConcs(i)/ResConcs(i))));
+        end
     end
     
+    %selectivity_sign = -1 * VOffset(x) * sign(log10(CapConcs(x)/ResConcs(x)));
     
-    new_count = count + index-1;
-    z(count:new_count) = selectivity;
-    count = new_count+1;
     
+    z = [z, selectivity];
 end
 close all;
 
 x = log10(x);
 y = log10(y);
 
-figure;
+h = figure;
 scatter(x(z == 1), y(z == 1), 'b', '+')
 hold on;
 scatter(x(z == -1), y(z == -1), 'r', 'x')
 scatter(x(z == 0), y(z == 0), 'k', 'o')
 
+savefig(h,'MgCl2.fig')
+close(h)
 
 end

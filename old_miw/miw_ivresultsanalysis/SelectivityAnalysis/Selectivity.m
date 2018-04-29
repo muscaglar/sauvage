@@ -9,7 +9,6 @@ function [ VoltageGradient, CurrentGradient, VOffset, IOffset, ResConcs,CapConcs
 
 AllowableSuppressionCodes = [0 16];
 
-figure(24)
 if nargin < 4
     Xrange = [0.00001 0.0001 0.001 0.01 0.1 0.25 0.5 1 2];
 end
