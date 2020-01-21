@@ -1,4 +1,4 @@
-function [ VoltageGradient, CurrentGradient, VOffset, IOffset, ResConcs,CapConcs, VoltageOffsets, CurrentOffsets, No ] = Selectivity( Expts, minResConc, maxResConc, Xrange )
+function [ VoltageGradient, CurrentGradient, VOffset, IOffset, ResConcs,CapConcs, VoltageOffsets, CurrentOffsets, No ] = Selectivity( Expts, minResConc, maxResConc, Xrange)
 %Caculate the gradient of the voltage and current offsets
 %   Note code currently assumes the capillary conc is fixed - and does all
 %   measurements on the reservoir conc only - not the difference!
@@ -8,6 +8,7 @@ function [ VoltageGradient, CurrentGradient, VOffset, IOffset, ResConcs,CapConcs
 %       raw data gets treated together (ie mean found of all ofsets (not mean of means).
 
 AllowableSuppressionCodes = [0 16];
+plot = 1;
 
 if nargin < 4
     Xrange = [0.00001 0.0001 0.001 0.01 0.1 0.25 0.5 1 2];
@@ -77,7 +78,7 @@ end
 
 if (max(size(unique(ResConcs))) >=2) ||(max(size(unique(CapConcs))) >= 2)
 
-[ VoltageGradient, CurrentGradient, VOffset, IOffset, XV, XI ] = SelectivityFromValues( ResConcs,CapConcs, VoltageOffsets, CurrentOffsets, Xrange, Expts(1).getCapillary() );
+[ VoltageGradient, CurrentGradient, VOffset, IOffset, XV, XI ] = SelectivityFromValues( ResConcs,CapConcs, VoltageOffsets, CurrentOffsets, Xrange, Expts(1).getCapillary(),plot );
 hold on
 
 if isnumeric(Expts) && length(CapillaryIDs) == 1

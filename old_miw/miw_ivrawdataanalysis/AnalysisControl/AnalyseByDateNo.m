@@ -1,5 +1,5 @@
 
-function [ Data ] = AnalyseByDateNo( Dates, Numbers, VoltageZeroOffset, save )
+function [ Data ] = AnalyseByDateNo( Dates, Numbers, VoltageZeroOffset, save,CapNo )
 %ANALYSEBYDATENO 
 
 %Note could check Dates and Numbers are the same size, or if not then just
@@ -22,7 +22,7 @@ end
                 warning('Not an IV Curve');
             else
                 %Assume it is an IV Curve - unless other info
-                [ Data ] = IVAnalyse(save, FileName, PathName, VoltageZeroOffset, 0);
+                [ Data ] = IVAnalyse(save, FileName, PathName, VoltageZeroOffset, 0,CapNo);
             end
             i = i+1;
         end

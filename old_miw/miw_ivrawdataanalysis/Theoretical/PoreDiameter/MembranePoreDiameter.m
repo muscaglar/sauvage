@@ -1,22 +1,4 @@
-% ***********************************
-% MembranePoreDiameter
-%   Calculate the size of a pore from resistance values
-%   
-%   (C) Michael Walker 2016 - All Rights Reserved
-%
-% The above copyright notice and this permission notice shall be included in
-% all copies or substantial portions of the Software.
-%
-% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-% IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-% FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-% AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-% LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-% OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-% SOFTWARE.
-%%***********************************
-
-function [ Diameter_nm, R_Pore, R_Access, R_Cone, R_Membrane, G_ns, D_Golov ] = MembranePoreDiameter( Resistance, Soln_Conductivity_S_m, BareResistance, Thickness_nm )
+function [ Diameter_nm, R_Pore, R_Access, R_Cone, R_Membrane, G_ns, D_Golov ] = MembranePoreDiameter( Resistance, Soln_Conductivity_S_m, BareResistance, Thickness_nm,taper )
 % Calc the size of a pore in a membrane - taking into account the
 % resistance of the capillary - but discounting its access resistance
 
@@ -35,7 +17,7 @@ if nargin < 3
     R_Cone = 0;
     warning('Not Taking into account the bare resistance');
 else
-    [d_nm_bare, R_Cone, R_CapAccess] = CapillaryDiameter( BareResistance, Soln_Conductivity_S_m );
+    [d_nm_bare, R_Cone, R_CapAccess] = CapillaryDiameter( BareResistance, Soln_Conductivity_S_m,taper );
 end
 S = Soln_Conductivity_S_m;
 L = Thickness_nm / 1e9;

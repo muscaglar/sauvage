@@ -1,4 +1,4 @@
-function [ Data ] = IVAnalyse(Save, FileName, PathName, VoltageZeroOffset, id)
+function [ Data ] = IVAnalyse(Save, FileName, PathName, VoltageZeroOffset, id,CapNo)
 %UNTITLED4 Summary of this function goes here
 %   Detailed explanation goes here
     if nargin >= 3
@@ -17,6 +17,7 @@ function [ Data ] = IVAnalyse(Save, FileName, PathName, VoltageZeroOffset, id)
     end
     
     [ date, no, details] = FileNameInterpret( FileName );
+    
     figure(1);
     subplot(2,2,1)
     VInt = VoltageIntercept(IV);
@@ -35,7 +36,7 @@ function [ Data ] = IVAnalyse(Save, FileName, PathName, VoltageZeroOffset, id)
     %GHK Permeability Analysis
     %need the pH for this file.
     subplot(2,2,4) 
-    [ ExptData , E ] = ReturnExperimentalDetails( date, no );
+    [ ExptData , E ] = ReturnExperimentalDetails( date, no,CapNo );
     if(E.getid() > 0)
         pHRes = ExptData{3};
         pHCap = ExptData{2};
@@ -61,7 +62,7 @@ function [ Data ] = IVAnalyse(Save, FileName, PathName, VoltageZeroOffset, id)
         %link it to a capillary
         
     end
-    
+    R
     Data = [date no pHCap pHRes size VInt I_Intercept R Rectification P N O (P/N)];
     %Save the plot out.
     switch(Save)

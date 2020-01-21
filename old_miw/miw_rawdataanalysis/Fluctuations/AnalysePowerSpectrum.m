@@ -1,21 +1,25 @@
-function [ freq , psdx, Fs] = AnalysePowerSpectrum( TraceID , voltage )
+function [ freq , psdx, Fs] = AnalysePowerSpectrum(iv_data,Fs)
 %ANALYSEFLUCTUATIONS Summary of this function goes here
 %   Detailed explanation goes here
 
 %Can either load all of trace and then analyse
 %OR do analysis on each section and then combine the resutls.
-[ ChannelData, FolderPath, TraceDate, TraceNo, TraceObj, Fs, NoFiles ] = LoadTraceByID( TraceID);
 
-ClassifiedVoltages = ClassifyVoltage(ChannelData(:,2));
+%[ ChannelData, FolderPath, TraceDate, TraceNo, TraceObj, Fs, NoFiles ] = LoadTraceByID( TraceID);
+
+%CLASSIFYVOLTAGE Return the applied voltage - ie 100, 150, 200 etc
+ClassifiedVoltages = round(iv_data(:,2),2,'significant');
+
 %Ideally select by voltage  - or run over all voltages
-if nargin < 2
-    voltage = mode(ClassifiedVoltages)
-    disp(['No voltage specified so using ' num2str(voltage )]);
-elseif isempty(voltage)
-        voltage = mode(ClassifiedVoltages);
-end
+% if nargin < 2
+%     voltage = mode(ClassifiedVoltages);
+%     disp(['No voltage specified so using ' num2str(voltage )]);
+% elseif isempty(voltage)
 
-ChannelDataByV = ChannelData(ClassifiedVoltages == voltage ,:);
+voltage = mode(ClassifiedVoltages);
+
+
+%ChannelDataByV = iv_data(ClassifiedVoltages == voltage ,:);
 
 %from http://uk.mathworks.com/help/signal/ug/psd-estimate-using-fft.html
 
@@ -23,7 +27,8 @@ rng default
 
 t = 0:1/Fs:1-1/Fs;
 %x = cos(2*pi*100*t) + randn(size(t));
-x = ChannelDataByV(:,3);
+%x = ChannelDataByV(:,3);
+x = iv_data(:,1);
 
 N = length(x);
 xdft = fft(x);

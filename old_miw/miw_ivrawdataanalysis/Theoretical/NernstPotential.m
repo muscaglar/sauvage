@@ -8,4 +8,3 @@ Voltage = 2.3026 * R_Const * (T_Const / (z * F_Const)) .* log10((Conc1 ./ Conc2)
 Voltage_mV = Voltage * 1000;
 
 end
-

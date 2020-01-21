@@ -1,6 +1,10 @@
 function [ FileName, PathName , CapIDs] = LoadExptFromExcelSummary_Simple(pages, User)
 
-fileName = '/Users/Mus/Dropbox/PhD/Experimental/ExperimentSummaries.xlsm';
+if(ispc)
+    fileName = 'C:\Users\mc934\Dropbox (Team Caglar)\Spreadsheets\selectivity.xlsm';
+else
+    fileName = '/Volumes/MusDrive/Dropbox/Spreadsheets/selectivity.xlsm';
+end
 
 index = size(pages,2);
 

@@ -26,10 +26,11 @@ if nargin < 1
          [FileName, PathName] = uigetfile({'*.txt','All IV Files';},'Choose IV Data', DataRoot);
     end
 end
+
 IVFile = importdata([PathName FileName]);
 IV = IVFile.data;
 IVDetails = IVFile.textdata;
-
+    
 %AC(:,3) = -1 *  AC(:,3);
 
 end

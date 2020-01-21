@@ -42,7 +42,7 @@ if(C.getid > 0)
         %analyse directly or just pass the file and path name into IV analyse  -
         %but then harder to pass in the voltage to add/ remove
         
-       [ Data ] = AnalyseByDateNo( Dates, Numbers, VoltageZeroOffset, save  );
+       [ Data ] = AnalyseByDateNo( Dates, Numbers, VoltageZeroOffset, save,CapNo );
     else
         warning('There are no experiments for this capillary');
     end

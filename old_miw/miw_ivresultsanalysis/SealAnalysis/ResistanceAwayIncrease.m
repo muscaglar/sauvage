@@ -3,7 +3,7 @@ function [ meanRaway, medianRaway  , bins , counts, stdRaway] = ResistanceAwayIn
 %   Detailed explanation goes here
 if nargin < 1
 [ ResistanceAwayIncrease ] = getNameValueMatrix( 'ResistanceAwayIncrease' );
-[ ResistanceRatios ] = getNameValueMatrix( 'ResistanceRatio' );
+[ ResistanceRatios ] = getNameValueMatrix('ResistanceRatio');
 else
     ResistanceAwayIncrease = [];
     ResistanceRatios = [];

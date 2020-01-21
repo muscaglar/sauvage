@@ -22,7 +22,7 @@ function [ResistanceMatrix, ResistanceAwayIncreases] = SealAnalysisByCapillaries
 % Script to complete Seal Analysis  - Take a vector of capillaries
 % Note the script will separate by membrane - so can pass in full mix
 if nargin < 2
-    DoIncrease = 0;
+    DoIncrease = 1;
 end
 
 
@@ -33,9 +33,9 @@ j = 1;
 for i = Capillaries
     
     if nargin < 3
-         [ ResistanceMatrixRow , ResistanceAwayIncrease ] = SealAnalysis( i , DoIncrease);
+         [ ResistanceMatrixRow , ResistanceAwayIncrease ] = SealAnalysis( i);
     else
-         [ ResistanceMatrixRow , ResistanceAwayIncrease ] = SealAnalysis( i , DoIncrease, SealedSuppression);
+         [ ResistanceMatrixRow , ResistanceAwayIncrease ] = SealAnalysis( i);
     end
     
     if ResistanceAwayIncrease  ~= 0

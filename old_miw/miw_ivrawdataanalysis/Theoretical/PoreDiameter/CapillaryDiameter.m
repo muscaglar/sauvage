@@ -27,10 +27,10 @@ if nargin < 2
     SolutionConductivity = 8.6;
 end
 
-Diameter = (1/Resistance) * ( ( 2/(pi*SolutionConductivity*tan(TaperAngle)) ) + ( 1 /(2*SolutionConductivity) ) );
+Diameter = (4*cot(TaperAngle)+pi) / (2*pi*Resistance*SolutionConductivity);
 
 R_Cone = 2 / ( Diameter * pi*SolutionConductivity*tan(TaperAngle) );
-R_Access = PoreAccessResistance(Diameter,SolutionConductivity );
+R_Access = 1 ./ ( 2 .* SolutionConductivity .* Diameter );
 
 Diameter_nm = 1e9 * Diameter;
 
