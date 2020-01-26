@@ -16,7 +16,7 @@
 % SOFTWARE.
 %%***********************************
 
-function IVplotWithGHK(Date, ExptNos,R, OR)
+function IVplotWithGHK(Date, ExptNos,R, OR, cap)
 %Plot the experiments and plot the GHK fits to them using the approriate
 %solutions concs  - note no need to put them in here as they should all
 %already be in the DB
@@ -28,6 +28,9 @@ if OR > 0
     clear ORG;
     ORG = Matlab2OriginPlot();
 end
+
+   SealedYN = 1; 
+   Suppressed = [0 16];
 
 hold off;
 Ratios = [];
@@ -42,7 +45,9 @@ for i = ExptNos
     hold all;
     
     %Load Conc calues for this line
-    [ ~, E] = ReturnExperimentalDetails( Date, i );
+    [~, E] = ReturnExperimentalDetails( Date, i, cap );
+    %[ ~, ~, E  ] = LoadExperiments( cap, SealedYN, Suppressed );
+    
     %double(E.getReservoirConc) double(E.getCapillaryConc)
     ConcI = double(E.getCapillaryConc);
     Conc0 = double(E.getReservoirConc);
@@ -60,7 +65,8 @@ for i = ExptNos
     
     Ratios(e,:) = [P Pp/Np Pp/(Np+Pp) GHK_Voltage(z, P, ConcI, Conc0)];
     
-    figure(1);
+    %figure(1);
+    hold on;
     plot(V, (I_Total+Offset)*1e9, '-');
     
     %Origin Plotting if I want this.
