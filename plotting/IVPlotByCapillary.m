@@ -17,8 +17,6 @@ function [ IV ] = IVPlotByCapillary(Input, CapOrExp )
       ExptIDs = temp_ExptIDs;
    end
 close all;
-figure;
-hold on
 
 for ExperimentID = ExptIDs
     [ IV, ~,~ ] = LoadIVByNo(  ExperimentID );
@@ -31,7 +29,31 @@ for ExperimentID = ExptIDs
     CapConc = E.getCapillaryConc();
     ResConc = E.getReservoirConc();
     %go_to_Origin([IV(:,2),IV(:,1)],num2str(ResConc));
-    scatter(IV(:,2),IV(:,1))    
+    
+    figure;
+hold on
+    
+    scatter(IV(:,2),IV(:,1)) 
+    
+    
+        
+        %GHK Fittting and plotting
+        z = [1 -1];
+        V = linspace(1.1*min(IV(:,2)),1.1*max(IV(:,2)),30);
+
+       ConcI = ResConc
+       Conc0 = CapConc
+
+        [ Pp, Np, Offset ] = GHK_FitPermeabilityMonoCharge( IV, ConcI, Conc0 );  % Vm
+        P = [Pp, Np];
+        [ I_Total, I_Components ] = GHK_TotalCurrent( z, V*1e-3 , P, ConcI, Conc0 );
+
+
+%         plot(IV(:,2),I_Total)
+%         plot(IV(:,2),I_Components)
+%         
+%         Ratios(e,:) = [P Pp/Np Pp/(Np+Pp) GHK_Voltage(z, P, ConcI, Conc0)];
+    
 end
     xlabel('Voltage (mV)');
     ylabel('Current (nA)');
